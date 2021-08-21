@@ -1,8 +1,10 @@
+package ru.stqa.pft.sandbox;
+
 public class MyFirstProgram
 {
  public static void main (String[] args)
   {
-  String hw = new String ("Hello world!");
+  String hw = "Hello world!";
   System.out.println(hw);
   }
 
