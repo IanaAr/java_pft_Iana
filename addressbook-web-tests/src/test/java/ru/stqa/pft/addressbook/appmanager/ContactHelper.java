@@ -46,10 +46,6 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form/input[21]"));
   }
 
-  public void returnToContactCreationPage() {
-    wd.get("http://localhost/addressbook/index.php");
-  }
-
   public void selectContact() {
     click(By.name("selected[]"));
   }
