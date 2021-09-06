@@ -8,6 +8,9 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModificationAllFields() throws Exception {
     app.getNavigationHelper().goToGroupPage();
+    if (!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+    }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initGroupModification();
     app.getGroupHelper().fillGroupForm(new GroupData("TEST1", "TEST2", "TEST3"));
@@ -18,6 +21,9 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModificationTwoFields() throws Exception {
     app.getNavigationHelper().goToGroupPage();
+    if (!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(new GroupData("test1", "test1", "test1"));
+    }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initGroupModification();
     app.getGroupHelper().fillGroupForm(new GroupData("TEST1", "TEST2", null));
@@ -28,6 +34,9 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModificationOneField() throws Exception {
     app.getNavigationHelper().goToGroupPage();
+    if (!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(new GroupData("test1", "test1", null));
+    }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initGroupModification();
     app.getGroupHelper().fillGroupForm(new GroupData("TEST1", null, null));
@@ -38,6 +47,9 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModificationNoField() throws Exception {
     app.getNavigationHelper().goToGroupPage();
+    if (!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(new GroupData("test1", "test1", "test1"));
+    }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().initGroupModification();
     app.getGroupHelper().fillGroupForm(new GroupData(null, null, null));

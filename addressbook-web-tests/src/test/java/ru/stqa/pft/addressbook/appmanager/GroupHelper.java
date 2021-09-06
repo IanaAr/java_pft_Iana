@@ -32,9 +32,26 @@ public class GroupHelper extends HelperBase {
     click(By.name("delete"));
   }
 
-  public void selectGroup() { click(By.name("selected[]")); }
+  public void selectGroup() {
+    click(By.name("selected[]"));
+  }
 
-  public void initGroupModification() { click(By.name("edit"));}
+  public void initGroupModification() {
+    click(By.name("edit"));
+  }
 
-  public void submitGroupModification() {  click(By.name("update")); }
+  public void submitGroupModification() {
+    click(By.name("update"));
+  }
+
+  public void createGroup(GroupData group) {
+    intGroupCreation();
+    fillGroupForm(group);
+    submitCreation();
+    returnToGroupPage();
+  }
+
+  public boolean isThereAGroup() {
+    return isElementPresent(By.name("selected[]"));
+  }
 }
