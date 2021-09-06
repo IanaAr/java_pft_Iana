@@ -14,5 +14,30 @@ public class ContactModificationTests extends TestBase {
     app.getNavigationHelper().goToHomePage();
   }
 
+  @Test
+  public void testContactModificationTwoFields() {
+    app.getNavigationHelper().goToHomePage();
+    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().fillContactForm(new ContactData("TEST", null, "TEST", null, null, null, null, null, null, null, null, null, null, null, null), false);
+    app.getContactHelper().submitContactModification();
+    app.getNavigationHelper().goToHomePage();
+  }
 
+  @Test
+  public void testContactModificationOneField() {
+    app.getNavigationHelper().goToHomePage();
+    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().fillContactForm(new ContactData("TEST", null, null, null, null, null, null, null, null, null, null, null, null, null, null), false);
+    app.getContactHelper().submitContactModification();
+    app.getNavigationHelper().goToHomePage();
+  }
+
+  @Test
+  public void testContactModificationZeroField() {
+    app.getNavigationHelper().goToHomePage();
+    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().fillContactForm(new ContactData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), false);
+    app.getContactHelper().submitContactModification();
+    app.getNavigationHelper().goToHomePage();
+  }
 }
