@@ -13,7 +13,7 @@ public class ContactModificationTests extends TestBase {
     if (!app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Test", null, null, null, null, null, null, null, null, null, null, null, null, null, "test1"), true);
     }
-    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().initContactModificationPage(0);
     app.getContactHelper().fillContactForm(new ContactData("TEST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST 1", "22222", "2222222222", "922222222", "222222", "qqq@qq.qqq", "www@www.ww", "ww@ww.ww", null), false);
     app.getContactHelper().submitContactModification();
     app.getNavigationHelper().returnToHomePage();
@@ -28,7 +28,7 @@ public class ContactModificationTests extends TestBase {
     if (!app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Test", null, null, null, null, null, null, null, null, null, null, null, null, null, "test1"), true);
     }
-    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().initContactModificationPage(1);
     app.getContactHelper().fillContactForm(new ContactData("TEST", null, "TEST", null, null, null, null, null, null, null, null, null, null, null, null), false);
     app.getContactHelper().submitContactModification();
     app.getNavigationHelper().returnToHomePage();
@@ -43,7 +43,7 @@ public class ContactModificationTests extends TestBase {
     if (!app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Test", "Test", "Test", "Test", "Title", "Company", "Address", "1111111", "9111111111", "922222222", "1111111", "qw@qw.qw", "qw@qw.qw", "qw@qw.qw", "test1"), true);
     }
-    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().initContactModificationPage(2);
     app.getContactHelper().fillContactForm(new ContactData("TEST", null, null, null, null, null, null, null, null, null, null, null, null, null, null), false);
     app.getContactHelper().submitContactModification();
     app.getNavigationHelper().returnToHomePage();
@@ -58,7 +58,7 @@ public class ContactModificationTests extends TestBase {
     if (!app.getContactHelper().isThereAContact()) {
       app.getContactHelper().createContact(new ContactData("Test", "Test", "Test", "Test", "Title", "Company", "Address", "1111111", "9111111111", "922222222", "1111111", "qw@qw.qw", "qw@qw.qw", "qw@qw.qw", "test1"), true);
     }
-    app.getContactHelper().initContactModificationPage();
+    app.getContactHelper().initContactModificationPage(before - 1);
     app.getContactHelper().fillContactForm(new ContactData(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), false);
     app.getContactHelper().submitContactModification();
     app.getNavigationHelper().returnToHomePage();
