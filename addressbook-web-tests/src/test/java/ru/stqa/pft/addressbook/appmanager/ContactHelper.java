@@ -28,17 +28,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), contactData.getFirstname());
     type(By.name("middlename"), contactData.getMiddlename());
     type(By.name("lastname"), contactData.getLastname());
-    type(By.name("nickname"), contactData.getNickname());
-    type(By.name("title"), contactData.getTitle());
     type(By.name("company"), contactData.getCompany());
     type(By.name("address"), contactData.getAddress());
-    type(By.name("home"), contactData.getHomephone());
-    type(By.name("mobile"), contactData.getMobphone());
-    type(By.name("work"), contactData.getWorkphone());
-    type(By.name("fax"), contactData.getFaxphone());
-    type(By.name("email"), contactData.getFirstemail());
-    type(By.name("email2"), contactData.getSecondemail());
-    type(By.name("email2"), contactData.getThirdemail());
+    type(By.name("mobile"), contactData.getPhone());
+    type(By.name("email"), contactData.getEmail());
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
     } else {
@@ -57,6 +50,7 @@ public class ContactHelper extends HelperBase {
   public void deleteContact() {
     wd.findElement(By.xpath("//input[@value='Delete']")).click();
     assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+    wd.findElement(By.cssSelector("div.msgbox"));
   }
 
   public void initContactModificationPage(int index) {
@@ -89,10 +83,17 @@ public class ContactHelper extends HelperBase {
 
   public List<ContactData> getContactList() {
     List<ContactData> contacts = new ArrayList<ContactData>();
-    List<WebElement> elements = wd.findElements(By.tagName("td"));
+    List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element : elements) {
-      String name = element.getText();
-      ContactData contact = new ContactData("Test", null, null, null, null, null, null, null, null, null, null, null, null, null, "[none]");
+      List<WebElement> cell = element.findElements(By.tagName("td"));
+      String lastname = cell.get(1).getText();
+      String firstname = cell.get(2).getText();
+      String address = cell.get(3).getText();
+      String email = cell.get(4).getText();
+      String mobile = cell.get(5).getText();
+      String attribute = element.findElement(By.tagName("input")).getAttribute("value");
+      int id = Integer.parseInt(attribute);
+      ContactData contact = new ContactData(id, firstname, null, lastname, null, null, null, null, null);
       contacts.add(contact);
     }
     return contacts;
