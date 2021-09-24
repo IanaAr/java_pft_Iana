@@ -25,49 +25,5 @@ public class GroupCreationTests extends TestBase {
     Assert.assertEquals(before, after);
   }
 
-  @Test
-  public void testGroupCreationTwoFields() throws Exception {
-    app.getNavigationHelper().goToGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
-    GroupData group = new GroupData("test1", "test2", "test3");
-    app.getGroupHelper().createGroup(group);
-    List<GroupData> after = app.getGroupHelper().getGroupList();
-    Assert.assertEquals(after.size(), before.size() + 1);
-    before.add(group);
-    Comparator<? super GroupData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
-  }
-
-  @Test
-  public void testGroupCreationOneField() throws Exception {
-    app.getNavigationHelper().goToGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
-    GroupData group = new GroupData("test1", "test2", "test3");
-    app.getGroupHelper().createGroup(group);
-    List<GroupData> after = app.getGroupHelper().getGroupList();
-    Assert.assertEquals(after.size(), before.size() + 1);
-    before.add(group);
-    Comparator<? super GroupData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
-  }
-
-  @Test
-  public void testGroupCreationNoField() throws Exception {
-    app.getNavigationHelper().goToGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
-    GroupData group = new GroupData("test1", "test2", "test3");
-    app.getGroupHelper().createGroup(group);
-    List<GroupData> after = app.getGroupHelper().getGroupList();
-    Assert.assertEquals(after.size(), before.size() + 1);
-    before.add(group);
-    Comparator<? super GroupData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before, after);
-  }
 }
 
