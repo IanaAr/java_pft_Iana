@@ -11,20 +11,20 @@ import java.util.List;
 public class ContactModificationTests extends TestBase {
 
   @BeforeMethod
-  public void insurePrecondition () {
-    app.getNavigationHelper().goToHomePage();
-    if (!app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Test", null, "TEST", null, null, null, null, "test1"), true);
+  public void insurePrecondition() {
+    app.navigationHelper().homePage();
+    if (app.contact().list().size() == 0) {
+      app.contact().create(new ContactData("Test", null, "TEST", null, null, null, null, "test1"), true);
     }
   }
 
   @Test
   public void testContactModification() {
     int index = 0;
-    List<ContactData> before = app.getContactHelper().getContactList();
+    List<ContactData> before = app.contact().list();
     ContactData contact = new ContactData(before.get(index).getId(), "TEST", "TEST", "TEST", "TEST", "TEST", "11111111111", "ww@ww.ww", "[none]");
-    app.getContactHelper().modifyContact(index, contact);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().modify(index, contact);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
     before.remove(index);
     before.add(contact);

@@ -14,11 +14,11 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreationAllFields() throws Exception {
-    app.getNavigationHelper().goToHomePage();
-    List<ContactData> before = app.getContactHelper().getContactList();
+    app.navigationHelper().homePage();
+    List<ContactData> before = app.contact().list();
     ContactData contact = new ContactData("TEST", "TEST", "TEST", "TEST", "TEST", "11111111111", "ww@ww.ww", "[none]");
-    app.getContactHelper().createContact(contact, true);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().create(contact, true);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
     before.add(contact);
     Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
@@ -29,11 +29,11 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreationTwoFields() throws Exception {
-    app.getNavigationHelper().goToHomePage();
-    List<ContactData> before = app.getContactHelper().getContactList();
+    app.navigationHelper().homePage();
+    List<ContactData> before = app.contact().list();
     ContactData contact = new ContactData("Test", null, "Test", null, null, null, null, "[none]");
-    app.getContactHelper().createContact(contact, true);
-    List<ContactData> after = app.getContactHelper().getContactList();
+    app.contact().create(contact, true);
+    List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
     before.add(contact);
     Comparator<? super ContactData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
