@@ -16,7 +16,11 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreationAllFields() throws Exception {
     app.navigationHelper().homePage();
     List<ContactData> before = app.contact().list();
-    ContactData contact = new ContactData("TEST", "TEST", "TEST", "TEST", "TEST", "11111111111", "ww@ww.ww", "[none]");
+    ContactData contact = new ContactData().
+            withFirstname("TEST").withMiddlename("TEST").
+            withLastname("TEST").withCompany("TEST").
+            withAddress("TEST").withPhone("11111111111").
+            withEmail("ww@ww.ww").withGroup("[none]");
     app.contact().create(contact, true);
     List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
@@ -31,7 +35,7 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreationTwoFields() throws Exception {
     app.navigationHelper().homePage();
     List<ContactData> before = app.contact().list();
-    ContactData contact = new ContactData("Test", null, "Test", null, null, null, null, "[none]");
+    ContactData contact = new ContactData().withFirstname("TEST1").withLastname("TEST1").withGroup("[none]");
     app.contact().create(contact, true);
     List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
