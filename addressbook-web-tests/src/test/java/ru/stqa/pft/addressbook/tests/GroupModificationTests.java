@@ -12,25 +12,22 @@ public class GroupModificationTests extends TestBase {
   @BeforeMethod
   public void insurePrecondition() {
     app.navigationHelper().groupPage();
-    if (app.group().list().size() == 0) {
+    if (app.group().all().size() == 0) {
       app.group().create(new GroupData().withName("test1"));
     }
   }
 
   @Test
   public void testGroupModificationAllFields() throws Exception {
-    List<GroupData> before = app.group().list();
-    int index = 0;
+    Set<GroupData> before = app.group().all();
+    GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData().
-            withId(before.get(index).getId()).withName("TEST1").withHeader("TEST2").withFooter("TEST3");
-    app.group().modify(index, group);
-    List<GroupData> after = app.group().list();
+            withId(modifiedGroup.getId()).withName("TEST1").withHeader("TEST2").withFooter("TEST3");
+    app.group().modify(group);
+    Set<GroupData> after = app.group().all();
     Assert.assertEquals(after.size(), before.size());
-    before.remove(index);
+    before.remove(modifiedGroup);
     before.add(group);
-    Comparator<? super GroupData> byId = ((o1, o2) -> Integer.compare(o1.getId(), o2.getId()));
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 }

@@ -5,26 +5,26 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.List;
+import java.util.Set;
 
 public class ContactDeletionTests extends TestBase {
 
   @BeforeMethod
   public void insurePrecondition() {
     app.navigationHelper().homePage();
-    if (app.contact().list().size() == 0) {
+    if (app.contact().all().size() == 0) {
       app.contact().create(new ContactData().withFirstname("Test").withLastname("Test").withGroup("[none]"), true);
     }
   }
 
   @Test
   public void testContactDeletion() throws Exception {
-    int index = 0;
-    List<ContactData> before = app.contact().list();
-    app.contact().delete(index);
-    List<ContactData> after = app.contact().list();
+    Set<ContactData> before = app.contact().all();
+    ContactData deleteContact = before.iterator().next();
+    app.contact().delete(deleteContact);
+    Set<ContactData> after = app.contact().all();
     Assert.assertEquals(after.size(), before.size() - 1);
-    before.remove(index);
+    before.remove(deleteContact);
     Assert.assertEquals(after, before);
   }
 }
