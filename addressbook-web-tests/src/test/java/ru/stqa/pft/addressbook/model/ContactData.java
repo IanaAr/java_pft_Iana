@@ -1,7 +1,5 @@
 package ru.stqa.pft.addressbook.model;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.Objects;
 
 public class ContactData {
@@ -11,9 +9,13 @@ public class ContactData {
   private String lastname;
   private String company;
   private String address;
-  private String phone;
+  private String homephone;
+  private String mobilephone;
+  private String workphone;
+  private String allphones;
   private String email;
   private String group;
+
 
   @Override
   public boolean equals(Object o) {
@@ -66,8 +68,24 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withPhone(String phone) {
-    this.phone = phone;
+  public ContactData withHomePhone(String homephone) {
+    this.homephone = homephone;
+    return this;
+  }
+
+  public ContactData withMobilePhone(String mobilephone) {
+    this.mobilephone = mobilephone;
+    return this;
+  }
+
+  public ContactData withWorkPhone(String workphone) {
+    this.workphone = workphone;
+    return this;
+  }
+
+
+  public ContactData withAllPhones(String allphones) {
+    this.allphones = allphones;
     return this;
   }
 
@@ -105,8 +123,20 @@ public class ContactData {
     return address;
   }
 
-  public String getPhone() {
-    return phone;
+  public String getHomePhone() {
+    return homephone;
+  }
+
+  public String getMobilePhone() {
+    return mobilephone;
+  }
+
+  public String getWorkPhone() {
+    return workphone;
+  }
+
+  public String getAllphones() {
+    return allphones;
   }
 
   public String getEmail() {
