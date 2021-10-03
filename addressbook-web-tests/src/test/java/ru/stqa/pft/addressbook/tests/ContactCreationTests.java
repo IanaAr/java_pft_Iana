@@ -16,11 +16,13 @@ public class ContactCreationTests extends TestBase {
   public void testContactCreationAllFields() throws Exception {
     app.navigationHelper().homePage();
     Contacts before = app.contact().all();
-    ContactData contact = new ContactData().
-            withFirstname("TEST").withMiddlename("TEST").
-            withLastname("TEST").withCompany("TEST").withAddress("TEST").
-            withHomePhone("2222").withMobilePhone("11111111111").withWorkPhone("11111").
-            withEmail("ww@ww.ww").withGroup("[none]");
+    ContactData contact = new ContactData()
+            .withFirstname("TEST").withMiddlename("TEST")
+            .withLastname("TEST").withCompany("TEST").withAddress("TEST")
+            .withHomePhone("2222").withMobilePhone("11111111111").withWorkPhone("11111")
+            .withFirstEmail("ww@ww.ww").withSecondEmail("www@w.w").withThirdEmail("ww@www.w")
+            .withAddress("testing street, testing home 4, testing appart. 11")
+            .withGroup("[none]");
     app.contact().create(contact, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
