@@ -16,6 +16,7 @@ public class GroupCreationTests extends TestBase {
     Groups before = app.group().all();
     GroupData group = new GroupData().withName("test1").withHeader("test2").withHeader("test3");
     app.group().create(group);
+    assertThat(app.group().count(), equalTo(before.size() + 1));
     Groups after = app.group().all();
     assertThat(after.size(), equalTo(before.size() + 1));
     assertThat(after, equalTo(
@@ -23,5 +24,15 @@ public class GroupCreationTests extends TestBase {
     );
   }
 
+  @Test
+  public void testBadGroupCreationAllFields() throws Exception {
+    app.navigationHelper().groupPage();
+    Groups before = app.group().all();
+    GroupData group = new GroupData().withName("test1'").withHeader("test2").withHeader("test3");
+    app.group().create(group);
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.group().all();
+    assertThat(after, equalTo(before));
+  }
 }
 

@@ -22,6 +22,7 @@ public class ContactCreationTests extends TestBase {
             withAddress("TEST").withPhone("11111111111").
             withEmail("ww@ww.ww").withGroup("[none]");
     app.contact().create(contact, true);
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
     assertThat(after.size(), equalTo(before.size() + 1));
     assertThat(after, equalTo(
@@ -35,6 +36,7 @@ public class ContactCreationTests extends TestBase {
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withFirstname("TEST1").withLastname("TEST1").withGroup("[none]");
     app.contact().create(contact, true);
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.contact().all();
     assertThat(after.size(), equalTo(before.size() + 1));
     assertThat(after, equalTo(
@@ -42,5 +44,16 @@ public class ContactCreationTests extends TestBase {
     );
   }
 
+  @Test
+  public void testBadContactCreationTwoFields() throws Exception {
+    app.navigationHelper().homePage();
+    Contacts before = app.contact().all();
+    ContactData contact = new ContactData().withFirstname("TEST1'").withLastname("TEST1").withGroup("[none]");
+    app.contact().create(contact, true);
+    assertThat(app.contact().count(), equalTo(before.size()));
+    Contacts after = app.contact().all();
+    assertThat(after.size(), equalTo(before.size()));
+    assertThat(after, equalTo(before));
+  }
 }
 
