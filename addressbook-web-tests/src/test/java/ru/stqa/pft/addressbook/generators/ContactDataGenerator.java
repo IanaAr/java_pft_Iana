@@ -41,7 +41,12 @@ public class ContactDataGenerator {
   private void save(List<ContactData> contacts, File file) throws IOException {
     Writer writer = new FileWriter(file);
     for (ContactData contact : contacts) {
-      writer.write(String.format("%s; %s \n", contact.getFirstname(), contact.getLastname()));
+      writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s \n",
+              contact.getFirstname(), contact.getMiddlename(), contact.getLastname(),
+              contact.getCompany(), contact.getAddress(),
+              contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone(),
+              contact.getFirstemail(), contact.getSecondemail(), contact.getThirdemail(),
+              contact.getGroup()));
     }
     writer.close();
   }
@@ -50,7 +55,18 @@ public class ContactDataGenerator {
     List<ContactData> contacts = new ArrayList<ContactData>();
     for (int i = 0; i < count; i++) {
       contacts.add(new ContactData().withFirstname(String.format("firstname %s", i))
-              .withLastname(String.format("lastname %s", i)));
+              .withMiddlename(String.format("middlename %s", i))
+              .withLastname(String.format("lastname %s", i))
+              .withCompany(String.format("company %s", i))
+              .withAddress(String.format("address %s", i))
+              .withHomePhone(String.format("homephone %s", i))
+              .withMobilePhone(String.format("mobilephone %s", i))
+              .withWorkPhone(String.format("workphone %s", i))
+              .withFirstEmail(String.format("firstemail %s", i))
+              .withSecondEmail(String.format("secondemail %s", i))
+              .withThirdEmail(String.format("thirdemail %s", i))
+              .withGroup(String.format("test %s", i))
+      );
     }
     return contacts;
   }
