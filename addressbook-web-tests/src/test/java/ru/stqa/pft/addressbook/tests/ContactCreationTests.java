@@ -4,7 +4,6 @@ import org.testng.annotations.*;
 
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,11 +22,11 @@ public class ContactCreationTests extends TestBase {
   @DataProvider
   public Iterator<Object[]> validContacts() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    BufferedReader reader =  new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.csv")));
     String line = reader.readLine();
     while (line != null) {
       String[] split = line.split("; ");
-      list.add(new Object[] {new ContactData()
+      list.add(new Object[]{new ContactData()
               .withFirstname(split[0]).withMiddlename(split[1])
               .withLastname(split[2]).withCompany(split[3]).withAddress(split[4])
               .withHomePhone(split[5]).withMobilePhone(split[6]).withWorkPhone(split[7])
