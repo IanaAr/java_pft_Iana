@@ -185,7 +185,7 @@ public class ContactData {
   public String getGroup() {
     return group;
   }
-  
+
   public File getPhoto() {
     return photo;
   }
