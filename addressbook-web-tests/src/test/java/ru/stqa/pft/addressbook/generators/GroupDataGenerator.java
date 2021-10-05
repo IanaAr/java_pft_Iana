@@ -16,13 +16,13 @@ import java.util.List;
 public class GroupDataGenerator {
 
   @Parameter(names = "-c", description = "Group count")
-  public int count ;
+  public int count;
 
   @Parameter(names = "-f", description = "Target file")
-  public String file ;
+  public String file;
 
   @Parameter(names = "-d", description = "Data format")
-  public String format ;
+  public String format;
 
   public static void main(String[] args) throws IOException {
     GroupDataGenerator generator = new GroupDataGenerator();
@@ -41,9 +41,9 @@ public class GroupDataGenerator {
     if (format.equals("csv")) {
       saveAsCsv(groups, new File(file));
     } else if (format.equals("xml")) {
-      saveASXml (groups, new File(file));
+      saveASXml(groups, new File(file));
     } else if (format.equals("json")) {
-      saveASJson (groups, new File(file));
+      saveASJson(groups, new File(file));
     } else {
       System.out.print("Unrecognized format" + format);
     }
@@ -75,7 +75,7 @@ public class GroupDataGenerator {
     writer.close();
   }
 
-  private  List<GroupData> generateGroups(int count) {
+  private List<GroupData> generateGroups(int count) {
     List<GroupData> groups = new ArrayList<GroupData>();
     for (int i = 0; i < count; i++) {
       groups.add(new GroupData().withName(String.format("test %s", i))
