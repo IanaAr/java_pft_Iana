@@ -3,42 +3,76 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+import org.testng.annotations.DataProvider;
 
+import javax.persistence.*;
 import java.io.File;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 @XStreamAlias("contact")
-
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
 
   @XStreamOmitField
+  @Id
+  @Column(name = "id")
   private int id = Integer.MAX_VALUE;
+
   @Expose
+  @Column(name = "firstname")
   private String firstname;
   @Expose
+  @Column(name = "middlename")
   private String middlename;
   @Expose
+  @Column(name = "lastname")
   private String lastname;
+  @Column(name = "company")
   private String company;
   @Expose
+  @Column(name = "address")
+  @Type(type = "text")
   private String address;
   @Expose
+  @Column(name = "home")
+  @Type(type = "text")
   private String homephone;
   @Expose
+  @Column(name = "mobile")
+  @Type(type = "text")
   private String mobilephone;
   @Expose
+  @Column(name = "work")
+  @Type(type = "text")
   private String workphone;
+  @Transient
   private String allphones;
   @Expose
+  @Column(name = "email")
+  @Type(type = "text")
   private String firstemail;
   @Expose
+  @Column(name = "email2")
+  @Type(type = "text")
   private String secondemail;
   @Expose
+  @Column(name = "email3")
+  @Type(type = "text")
   private String thirdemail;
+  @Transient
   private String allemails;
   @Expose
+  @Transient
   private String group;
-  private File photo;
+  @Column(name = "photo")
+  @Type(type = "text")
+  private String photo;
+  @Column(name = "deprecated")
+  private Date deprecated;
 
 
   @Override
@@ -141,7 +175,7 @@ public class ContactData {
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
@@ -206,7 +240,7 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return photo;
+    return  new File(photo);
   }
 
 }
