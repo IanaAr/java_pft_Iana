@@ -17,9 +17,11 @@ public class ContactHomePageEqualsTests extends TestBase {
   public void insurePrecondition() {
     app.navigationHelper().homePage();
     if (app.contact().all().size() == 0) {
-      app.contact().create(new ContactData().withFirstname("Test").withLastname("Test").
-              withHomePhone("1111").withMobilePhone("111111111").withWorkPhone("11111").
-              withGroup("[none]"), true);
+      app.contact().create(new ContactData().withFirstname("Test").withLastname("Test")
+              .withAddress("Test")
+              .withHomePhone("1111").withMobilePhone("111111111").withWorkPhone("11111")
+              .withFirstEmail("Test@test").withSecondEmail("Test@test").withThirdEmail("Test@test")
+              .withGroup("[none]"), true);
     }
   }
 
@@ -29,7 +31,22 @@ public class ContactHomePageEqualsTests extends TestBase {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAllphones(), equalTo(mergePhones(contactInfoFromEditForm)));
+  }
+
+  @Test
+  public void testContactEmails() {
+    app.navigationHelper().homePage();
+    ContactData contact = app.contact().all().iterator().next();
+    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAllemails(), equalTo(mergeEmails(contactInfoFromEditForm)));
+  }
+
+
+  @Test
+  public void testContactAddress() {
+    app.navigationHelper().homePage();
+    ContactData contact = app.contact().all().iterator().next();
+    ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAddress(), equalTo(contactInfoFromEditForm.getAddress()));
   }
 

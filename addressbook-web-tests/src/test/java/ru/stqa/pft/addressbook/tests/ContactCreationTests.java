@@ -52,19 +52,19 @@ public class ContactCreationTests extends TestBase {
         line = reader.readLine();
       }
       Gson gson = new Gson();
-      List<ContactData> groups = gson.fromJson(json, new TypeToken<List<ContactData>>() {
+      List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>() {
       }.getType());
-      return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+      return contacts.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
   }
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreationAllFields(ContactData contact) throws Exception {
     app.navigationHelper().homePage();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.contact().create(contact, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after.size(), equalTo(before.size() + 1));
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())))
@@ -74,39 +74,21 @@ public class ContactCreationTests extends TestBase {
   @Test
   public void testContactCreationWithPhoto() throws Exception {
     app.navigationHelper().homePage();
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     File photo = new File("src/test/resources/nature.png");
     ContactData contact = new ContactData()
-            .withFirstname("TESTPhoto").withLastname("TEST1")
+            .withFirstname("TESTPhoto").withLastname("TEST1").withMiddlename("TEST1")
+            .withAddress("TEST1").withCompany("TEST1")
+            .withHomePhone("1111").withMobilePhone("111111111").withWorkPhone("11111")
+            .withFirstEmail("Test@test").withSecondEmail("Test@test").withThirdEmail("Test@test")
             .withGroup("[none]").withPhoto(photo);
     app.contact().create(contact, true);
     assertThat(app.contact().count(), equalTo(before.size() + 1));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after.size(), equalTo(before.size() + 1));
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())))
     );
-  }
-
-  /* @Test
-   public void testCurrentDir () {
-    File currentDir = new File(".");
-    System.out.println(currentDir.getAbsolutePath());
-    File photo = new File("src/test/resources/nature.png");
-    System.out.println(photo.getAbsolutePath());
-    System.out.println(photo.exists());
-   } */
-
-  @Test
-  public void testBadContactCreationTwoFields() throws Exception {
-    app.navigationHelper().homePage();
-    Contacts before = app.contact().all();
-    ContactData contact = new ContactData().withFirstname("TEST1'").withLastname("TEST1").withGroup("[none]");
-    app.contact().create(contact, true);
-    assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
-    assertThat(after.size(), equalTo(before.size()));
-    assertThat(after, equalTo(before));
   }
 }
 

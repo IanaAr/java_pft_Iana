@@ -4,11 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
-import org.testng.annotations.DataProvider;
 
 import javax.persistence.*;
 import java.io.File;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,6 +29,7 @@ public class ContactData {
   @Expose
   @Column(name = "lastname")
   private String lastname;
+  @Expose
   @Column(name = "company")
   private String company;
   @Expose
@@ -80,12 +79,12 @@ public class ContactData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ContactData that = (ContactData) o;
-    return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname);
+    return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(middlename, that.middlename) && Objects.equals(lastname, that.lastname) && Objects.equals(company, that.company) && Objects.equals(address, that.address) && Objects.equals(homephone, that.homephone) && Objects.equals(mobilephone, that.mobilephone) && Objects.equals(workphone, that.workphone) && Objects.equals(firstemail, that.firstemail) && Objects.equals(secondemail, that.secondemail) && Objects.equals(thirdemail, that.thirdemail);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstname, lastname);
+    return Objects.hash(id, firstname, middlename, lastname, company, address, homephone, mobilephone, workphone, firstemail, secondemail, thirdemail);
   }
 
   @Override
@@ -93,6 +92,15 @@ public class ContactData {
     return "ContactData{" +
             "firstname='" + firstname + '\'' +
             ", lastname='" + lastname + '\'' +
+            ", middlename='" + middlename + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", homephone='" + homephone + '\'' +
+            ", mobilephone='" + mobilephone + '\'' +
+            ", workphone='" + workphone + '\'' +
+            ", firstemail='" + firstemail + '\'' +
+            ", secondemail='" + secondemail + '\'' +
+            ", thirdemail='" + thirdemail + '\'' +
             '}';
   }
 
@@ -240,7 +248,7 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    return  new File(photo);
+    return new File(photo);
   }
 
 }
