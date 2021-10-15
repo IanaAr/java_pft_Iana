@@ -50,6 +50,8 @@ public class GroupData {
   public String toString() {
     return "GroupData{" +
             "name='" + name + '\'' +
+            "header='" + header + '\'' +
+            "footer='" + footer + '\'' +
             '}';
   }
 

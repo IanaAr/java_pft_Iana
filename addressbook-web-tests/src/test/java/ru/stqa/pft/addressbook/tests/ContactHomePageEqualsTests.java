@@ -15,8 +15,8 @@ public class ContactHomePageEqualsTests extends TestBase {
 
   @BeforeMethod
   public void insurePrecondition() {
-    app.navigationHelper().homePage();
-    if (app.contact().all().size() == 0) {
+    if (app.db().contacts().size() == 0) {
+      app.navigationHelper().homePage();
       app.contact().create(new ContactData().withFirstname("Test").withLastname("Test")
               .withAddress("Test")
               .withHomePhone("1111").withMobilePhone("111111111").withWorkPhone("11111")
@@ -31,6 +31,7 @@ public class ContactHomePageEqualsTests extends TestBase {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAllphones(), equalTo(mergePhones(contactInfoFromEditForm)));
+
   }
 
   @Test
