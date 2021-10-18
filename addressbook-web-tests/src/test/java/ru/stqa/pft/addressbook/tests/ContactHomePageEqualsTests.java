@@ -20,8 +20,7 @@ public class ContactHomePageEqualsTests extends TestBase {
       app.contact().create(new ContactData().withFirstname("Test").withLastname("Test")
               .withAddress("Test")
               .withHomePhone("1111").withMobilePhone("111111111").withWorkPhone("11111")
-              .withFirstEmail("Test@test").withSecondEmail("Test@test").withThirdEmail("Test@test")
-              .withGroup("[none]"), true);
+              .withFirstEmail("Test@test").withSecondEmail("Test@test").withThirdEmail("Test@test"),true);
     }
   }
 

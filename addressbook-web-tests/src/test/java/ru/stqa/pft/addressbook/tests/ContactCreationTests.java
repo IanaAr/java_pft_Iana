@@ -7,6 +7,7 @@ import org.testng.annotations.*;
 
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -74,16 +75,17 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreationWithPhoto() throws Exception {
-    app.navigationHelper().homePage();
-    Contacts before = app.db().contacts();
+    Groups groups = app.db().groups();
     File photo = new File("src/test/resources/nature.png");
     ContactData contact = new ContactData()
             .withFirstname("TESTPhoto").withLastname("TEST1").withMiddlename("TEST1")
             .withAddress("TEST1").withCompany("TEST1")
             .withHomePhone("1111").withMobilePhone("111111111").withWorkPhone("11111")
             .withFirstEmail("Test@test").withSecondEmail("Test@test").withThirdEmail("Test@test")
-            .withGroup("[none]").withPhoto(photo);
+            .withPhoto(photo).inGroup(groups.iterator().next());
+    Contacts before = app.db().contacts();
     app.contact().create(contact, true);
+    app.navigationHelper().homePage();
     assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
     assertThat(after.size(), equalTo(before.size() + 1));

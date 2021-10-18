@@ -19,8 +19,7 @@ public class ContactModificationTests extends TestBase {
               .withFirstname("TEST").withMiddlename("TEST").withLastname("TEST")
               .withCompany("TEST").withAddress("TEST")
               .withHomePhone("homephone").withMobilePhone("mobilephone").withWorkPhone("workphone")
-              .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail")
-              .withGroup("[none]"), true);
+              .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail"), true);
     }
   }
 
@@ -32,8 +31,7 @@ public class ContactModificationTests extends TestBase {
             .withFirstname("TEST").withMiddlename("TEST").withLastname("TEST")
             .withCompany("TEST").withAddress("TEST")
             .withHomePhone("homephone").withMobilePhone("mobilephone").withWorkPhone("workphone")
-            .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail")
-            .withGroup("[none]");
+            .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail");
     app.navigationHelper().homePage();
     app.contact().modify(contact);
     assertThat(app.contact().count(), equalTo(before.size()));

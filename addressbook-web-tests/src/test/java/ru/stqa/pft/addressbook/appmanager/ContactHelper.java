@@ -38,7 +38,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("email3"), contactData.getThirdemail());
     //attach(By.name("photo"), contactData.getPhoto());
     if (creation) {
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+      if (contactData.getGroups().size() > 0) {
+        Assert.assertTrue(contactData.getGroups().size() == 1);
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+      }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
@@ -102,6 +105,10 @@ public class ContactHelper extends HelperBase {
     click(By.xpath("//div[@id='content']/form/input[22]"));
   }
 
+  public void addNewGroup() {
+    click(By.name("add"));
+  }
+
   public void returnToHomePage() {
     click(By.linkText("home"));
   }
@@ -151,16 +158,27 @@ public class ContactHelper extends HelperBase {
       String firstname = cell.get(2).getText();
       String address = cell.get(3).getText();
       String allemails = cell.get(4).getText();
-      // String[] phones = cell.get(5).getText().split("\n");
       String allphones = cell.get(5).getText();
       String attribute = element.findElement(By.tagName("input")).getAttribute("value");
       int id = Integer.parseInt(attribute);
-      /*contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).
-              withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2])); */
       contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).
               withAllPhones(allphones).withAllEmails(allemails).withAddress(address));
     }
     return new Contacts(contactCache);
+  }
+
+  public void addInAGroup(ContactData contact) {
+
+    selectById(contact.getId());
+    if (contact.getGroups().size() > 0) {
+      Assert.assertTrue(contact.getGroups().size() == 1);
+      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
+    } else {
+    Assert.assertFalse(isElementPresent(By.name("to_group")));
+  }
+    addNewGroup();
+    contactCache = null;
+    returnToHomePage();
   }
 }
 
