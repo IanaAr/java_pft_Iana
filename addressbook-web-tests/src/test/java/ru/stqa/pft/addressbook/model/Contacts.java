@@ -47,4 +47,24 @@ public class Contacts extends ForwardingSet<ContactData> {
     }
     return null;
   }
+
+  public ContactData getContactWithAGroup() {
+    for (ContactData contactData : delegate) {
+      Groups contactGroups = contactData.getGroups();
+      if (contactGroups.size() > 0) {
+        return contactData;
+      }
+    }
+    return null;
+  }
+
+  public ContactData getContactWithoutAllGroups(Groups groups) {
+    for (ContactData contactData : delegate) {
+      Groups contactGroups = contactData.getGroups();
+      if (contactGroups.size() != groups.size()) {
+        return contactData;
+      }
+    }
+    return null;
+  }
 }

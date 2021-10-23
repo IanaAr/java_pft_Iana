@@ -7,54 +7,60 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class ContactRemoveFromTheGroup extends TestBase {
 
 
   @BeforeMethod
   public void insurePrecondition() {
-    if (app.db().contacts().size() == 0 || findContactWithoutAllGroups() == null) {
+    if (app.db().groups().size() == 0) {
+      app.navigationHelper().groupPage();
+      app.group().create(new GroupData().withName("test 1").withHeader("test 1").withFooter("test 1"));
+    }
+
+    if (app.db().contacts().size() == 0) {
+      GroupData groups = app.db().groups().iterator().next();
       app.navigationHelper().homePage();
       app.contact().create(new ContactData()
               .withFirstname("TEST").withMiddlename("TEST").withLastname("TEST")
               .withCompany("TEST").withAddress("TEST")
               .withHomePhone("homephone").withMobilePhone("mobilephone").withWorkPhone("workphone")
-              .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail"), true);
+              .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail").inGroup(groups), true);
     }
-    if (app.db().groups().size() == 0) {
-      app.navigationHelper().groupPage();
-      app.group().create(new GroupData().withName("test 1").withHeader("test 1").withFooter("test 1"));
+
+    Contacts contacts = app.db().contacts();
+    if (contacts.getContactWithAGroup() == null) {
+      GroupData group = app.db().groups().iterator().next();
+      ContactData contact = app.db().contacts().iterator().next();
+      app.navigationHelper().homePage();
+      app.contact().addToAGroup(contact, group);
     }
   }
 
   @Test
   public void testContactRemoveFromAGroup() throws Exception {
-    app.navigationHelper().homePage();
     Contacts before = app.db().contacts();
-    ContactData removeFromAGroup = before.iterator().next();
-    app.contact().removeContactFromAGroup(removeFromAGroup);
-    assertThat(app.contact().count(), equalTo(before.size()));
+    ContactData contactWithAGroup = before.getContactWithAGroup();
+    GroupData group = contactWithAGroup.getGroups().iterator().next();
+
+    Groups beforegroups = contactWithAGroup.getGroups();
+
+    assertTrue(contactWithAGroup.getGroups().contains(group));
+
+    app.navigationHelper().homePage();
+    app.contact().removeContactFromAGroup(contactWithAGroup, group);
+
     Contacts after = app.db().contacts();
+    ContactData updatedContact = after.findContactById(contactWithAGroup);
+    Groups aftergroups = updatedContact.getGroups();
+
+    assertFalse(updatedContact.getGroups().contains(group));
     assertEquals(after.size(), before.size());
-    assertThat(after, equalTo(before.without(removeFromAGroup).withAdded(removeFromAGroup)));
+    assertEquals(aftergroups.size(), beforegroups.size() - 1);
     verifyContactListInUi();
-  }
-
-
-  private ContactData findContactWithoutAllGroups() {
-    Contacts contacts = app.db().contacts();
-    Groups groups = app.db().groups();
-
-    for (ContactData contactData : contacts) {
-      Groups contactGroups = contactData.getGroups();
-      if (contactGroups.size() != groups.size()) {
-        return contactData;
-      }
-    }
-    return null;
   }
 
 }

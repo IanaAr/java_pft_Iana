@@ -7,8 +7,6 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.AssertJUnit.assertTrue;
@@ -17,7 +15,8 @@ public class ContactAddToAGroupTests extends TestBase {
 
   @BeforeMethod
   public void insurePrecondition() {
-    if (app.db().contacts().size() == 0 || findContactWithoutAllGroups() == null) {
+
+    if (app.db().contacts().size() == 0) {
       app.navigationHelper().homePage();
       app.contact().create(new ContactData()
               .withFirstname("TEST").withMiddlename("TEST").withLastname("TEST")
@@ -25,18 +24,31 @@ public class ContactAddToAGroupTests extends TestBase {
               .withHomePhone("homephone").withMobilePhone("mobilephone").withWorkPhone("workphone")
               .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail"), true);
     }
+
     if (app.db().groups().size() == 0) {
       app.navigationHelper().groupPage();
       app.group().create(new GroupData().withName("test 1").withHeader("test 1").withFooter("test 1"));
+    }
+
+    Contacts contacts = app.db().contacts();
+    Groups groups = app.db().groups();
+    if (contacts.getContactWithoutAllGroups(groups) == null) {
+      GroupData group = app.db().groups().iterator().next();
+      ContactData contact = app.db().contacts().iterator().next();
+      app.navigationHelper().homePage();
+      app.contact().removeContactFromAGroup(contact, group);
     }
   }
 
 
   @Test
-  public void testContactAddToAGroup2() throws Exception {
-    ContactData contactData = findContactWithoutAllGroups();
-    GroupData groupData = findNewGroup(contactData);
+  public void testContactAddToAGroup() throws Exception {
+
+    Groups groups = app.db().groups();
     Contacts before = app.db().contacts();
+    ContactData contactData = before.getContactWithoutAllGroups(groups);
+    GroupData groupData = contactData.findNewGroup(groups);
+
     assertFalse(contactData.getGroups().contains(groupData));
 
     app.navigationHelper().homePage();
@@ -51,29 +63,6 @@ public class ContactAddToAGroupTests extends TestBase {
 
   }
 
-
-  private ContactData findContactWithoutAllGroups() {
-    Contacts contacts = app.db().contacts();
-    Groups groups = app.db().groups();
-
-    for (ContactData contactData : contacts) {
-      Groups contactGroups = contactData.getGroups();
-      if (contactGroups.size() != groups.size()) {
-        return contactData;
-      }
-    }
-    return null;
-  }
-
-  private GroupData findNewGroup(ContactData contactData) {
-    Groups contactGroups = contactData.getGroups();
-    Groups groups = app.db().groups();
-
-    return groups.stream()
-            .filter(g -> !contactGroups.contains(g))
-            .findFirst()
-            .get();
-  }
 }
 
 

@@ -266,4 +266,12 @@ public class ContactData {
     groups.add(group);
     return this;
   }
+
+  public GroupData findNewGroup(Groups allGroups) {
+    return allGroups.stream()
+            .filter(g -> !groups.contains(g))
+            .findFirst()
+            .orElse(null);
+  }
+
 }

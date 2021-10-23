@@ -11,7 +11,6 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 
@@ -175,20 +174,15 @@ public class ContactHelper extends HelperBase {
 
   public void addToAGroup(ContactData contact, GroupData group) {
     selectById(contact.getId());
-      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
     addNewGroup();
     contactCache = null;
     returnToHomePage();
   }
 
-  public void removeContactFromAGroup(ContactData contact) {
+  public void removeContactFromAGroup(ContactData contact, GroupData group) {
     selectById(contact.getId());
-    if (contact.getGroups().size() > 0) {
-      Assert.assertTrue(contact.getGroups().size() >= 1);
-      new Select(wd.findElement(By.name("group"))).selectByVisibleText(contact.getGroups().iterator().next().getName());
-    } else {
-      Assert.assertFalse(isElementPresent(By.name("group")));
-    }
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
     selectById(contact.getId());
     removeFromAGroup();
     contactCache = null;
