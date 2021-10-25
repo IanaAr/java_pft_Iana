@@ -1,4 +1,5 @@
 package ru.stqa.pft.mantisbt.appmanager;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +10,12 @@ public class HelperBase {
   protected ApplicationManager app;
   protected WebDriver wd;
 
-  public HelperBase (ApplicationManager app) {
+  public HelperBase(ApplicationManager app) {
     this.app = app;
     this.wd = app.getDriver();
   }
 
-  protected void click (By locator) {
+  protected void click(By locator) {
     wd.findElement(locator).click();
   }
 
