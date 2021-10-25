@@ -6,7 +6,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -18,8 +17,11 @@ public class ApplicationManager {
   private WebDriver wd;
   private String browser;
   private RegistrationHelper registrationHelper;
+  private SessionHelper sessionHelper;
+  private NavigationHelper navigationHelper;
   private FtpHelper ftp;
   private MailHelper mailHelper;
+
 
 
   public ApplicationManager(String browser) {
@@ -54,6 +56,20 @@ public class ApplicationManager {
     return registrationHelper;
   }
 
+  public SessionHelper sessionHelper() {
+    if (sessionHelper == null) {
+      sessionHelper = new SessionHelper(this);
+    }
+    return sessionHelper;
+  }
+
+  public NavigationHelper navigationHelper() {
+    if (navigationHelper == null) {
+      navigationHelper = new NavigationHelper(this);
+    }
+    return navigationHelper;
+  }
+
   public FtpHelper ftp() {
     if (ftp == null) {
       ftp = new FtpHelper(this);
@@ -82,5 +98,4 @@ public class ApplicationManager {
     }
     return mailHelper;
   }
-
 }
