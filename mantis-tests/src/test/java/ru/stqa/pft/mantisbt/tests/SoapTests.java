@@ -15,7 +15,7 @@ public class SoapTests {
   @Test
   public void  testGetProjects () throws MalformedURLException, ServiceException, RemoteException {
     MantisConnectPortType ms = new MantisConnectLocator()
-            .getMantisConnectPort(new URL("https://localhost/mantisbt/api/soap/mantisconnect.php"));
+            .getMantisConnectPort(new URL("http://localhost/mantisbt/api/soap/mantisconnect.php"));
     ProjectData[] projects = ms.mc_projects_get_user_accessible("administrator", "root");
     System.out.println(projects.length);
     for (ProjectData project : projects) {

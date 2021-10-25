@@ -2,6 +2,7 @@ package ru.stqa.pft.mantisbt.appmanager;
 
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
+import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantisbt.model.MailMessage;
 
 import javax.mail.MessagingException;
@@ -50,4 +51,10 @@ public class MailHelper {
   public void start () {wiser.start();}
 
   public void stop () {wiser.stop();}
+
+  public String findConfirmationLink(List<MailMessage> mailMessages, String email) {
+    MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findAny().get();
+    VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+    return regex.getText(mailMessage.text);
+  }
 }
