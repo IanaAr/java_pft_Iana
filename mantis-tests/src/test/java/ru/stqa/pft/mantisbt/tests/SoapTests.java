@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantisbt.tests;
 
-import org.hamcrest.core.Is;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantisbt.model.Issue;
