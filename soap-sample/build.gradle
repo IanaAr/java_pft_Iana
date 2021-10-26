@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
+
 repositories {
     mavenCentral()
 }
@@ -20,9 +21,11 @@ buildscript{
 apply plugin: 'no.nils.wsdl2java'
 
 wsdl2java {
-    generatedWsdlDir = file("src/main/java")
+//    generateWsdlDir = file("src/main/java")
     wsdlDir = file("src/main/resources") // define to support incremental build
     wsdlsToGenerate = [   //  2d-array of wsdls and cxf-parameters
-                          ['src/main/resources/wsdl/geoipservice.wsdl'],
+                          ['src/main/resources/geoipservice.wsdl'],
     ]
+    cxfVersion = "2.6.1"
+//    cxfPluginVersion = "2.4.0"
 }
