@@ -35,7 +35,7 @@ public class MailHelper {
     throw new Error("No mail :(");
   }
 
-  public static MailMessage toModelMail(WiserMessage m)  {
+  public static MailMessage toModelMail(WiserMessage m) {
     try {
       MimeMessage mm = m.getMimeMessage();
       return new MailMessage(mm.getAllRecipients()[0].toString(), (String) mm.getContent());
@@ -48,9 +48,13 @@ public class MailHelper {
     }
   }
 
-  public void start () {wiser.start();}
+  public void start() {
+    wiser.start();
+  }
 
-  public void stop () {wiser.stop();}
+  public void stop() {
+    wiser.stop();
+  }
 
   public String findConfirmationLink(List<MailMessage> mailMessages, String email) {
     MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findAny().get();

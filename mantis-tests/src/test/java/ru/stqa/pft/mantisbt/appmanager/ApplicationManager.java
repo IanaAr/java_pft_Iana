@@ -22,7 +22,7 @@ public class ApplicationManager {
   private FtpHelper ftp;
   private MailHelper mailHelper;
   private DbHelper dbHelper;
-
+  private SoapHelper soapHelper;
 
 
   public ApplicationManager(String browser) {
@@ -71,7 +71,9 @@ public class ApplicationManager {
     return navigationHelper;
   }
 
-  public DbHelper db() { return dbHelper;}
+  public DbHelper db() {
+    return dbHelper;
+  }
 
   public FtpHelper ftp() {
     if (ftp == null) {
@@ -95,10 +97,17 @@ public class ApplicationManager {
     return wd;
   }
 
-  public MailHelper mail () {
+  public MailHelper mail() {
     if (mailHelper == null) {
       mailHelper = new MailHelper(this);
     }
     return mailHelper;
+  }
+
+  public SoapHelper sp () {
+    if(soapHelper == null) {
+      soapHelper = new SoapHelper(this);
+    }
+    return soapHelper;
   }
 }
