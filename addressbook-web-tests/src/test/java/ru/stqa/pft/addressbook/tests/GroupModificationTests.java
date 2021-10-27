@@ -20,7 +20,7 @@ public class GroupModificationTests extends TestBase {
   }
 
   @Test
-  public void testGroupModificationAllFields() throws Exception {
+  public void testGroupModificationAllFields()  {
     Groups before = app.db().groups();
     GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData().
