@@ -24,19 +24,11 @@ public class ContactAddToAGroupTests extends TestBase {
               .withHomePhone("homephone").withMobilePhone("mobilephone").withWorkPhone("workphone")
               .withFirstEmail("firstemail").withSecondEmail("secondemail").withThirdEmail("thirdemail"), true);
     }
-
-    if (app.db().groups().size() == 0) {
-      app.navigationHelper().groupPage();
-      app.group().create(new GroupData().withName("test 1").withHeader("test 1").withFooter("test 1"));
-    }
-
     Contacts contacts = app.db().contacts();
     Groups groups = app.db().groups();
-    if (contacts.getContactWithoutAllGroups(groups) == null) {
-      GroupData group = app.db().groups().iterator().next();
-      ContactData contact = app.db().contacts().iterator().next();
-      app.navigationHelper().homePage();
-      app.contact().removeContactFromAGroup(contact, group);
+    if (app.db().groups().size() == 0 || contacts.getContactWithoutAllGroups(groups) == null ) {
+      app.navigationHelper().groupPage();
+      app.group().create(new GroupData().withName("new group").withHeader("new group").withFooter("new group"));
     }
   }
 
