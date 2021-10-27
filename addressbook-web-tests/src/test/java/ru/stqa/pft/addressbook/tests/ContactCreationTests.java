@@ -1,8 +1,8 @@
 package ru.stqa.pft.addressbook.tests;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
-import org.openqa.selenium.json.TypeToken;
 import org.testng.annotations.*;
 
 import ru.stqa.pft.addressbook.model.ContactData;
